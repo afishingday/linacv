@@ -1,0 +1,150 @@
+{
+  "profile": {
+    "name": "Lina Marcela Cartagena Sanguino",
+    "title": "Senior Quality Analyst / QA Engineer",
+    "photoUrl": "lina.jpeg",
+"summary": "Quality Assurance Leader with over 17 years of experience driving excellence in software quality across fintech, retail, and digital accessibility projects. Skilled in building and leading distributed QA teams, defining and executing end-to-end QA strategies (manual, and accessibility), and fostering a culture of continuous improvement. Proven ability to collaborate with global stakeholders and vendors, deliver actionable quality metrics, and ensure the development of high-performing digital products in agile environments."
+  },
+  "experience": [
+    {
+      "period": "2015 – Present",
+      "company": "Globant",
+      "position": "Senior Quality Analyst (Sr Level 3)",
+      "responsibilities": [
+        "Coordinated distributed QA teams across different verticals and vendors.",
+        "Implemented QA strategies ensuring coverage of functional, regression, acceptance, and accessibility testing.",
+        "Created, analyzed, and presented executive quality reports internally and to clients.",
+        "Provided mentoring and feedback to team members, promoting professional growth and process standardization.",
+        "Participated in training sessions, workshops, and talks on QA and accessibility.",
+        "Executed functional testing on web, mobile, and backend applications (including API testing).",
+        "Project Types: Banking, Education, and Telecommunications"
+      ]
+    },
+    {
+      "period": "2012 – 2015",
+      "company": "Arkix S.A.S.",
+      "position": "QA Lead",
+      "responsibilities": [
+        "Managed QA teams ensuring effective testing processes.",
+        "Performed functional testing on web and mobile applications.",
+        "Reported incidents in bug tracking tools.",
+        "Trained clients on testing processes.",
+        "Project Types: Government, Entertainment, and Ecommerce"
+      ]
+    },
+    {
+      "period": "2011 – 2012",
+      "company": "Informática Siglo 21 Ltda.",
+      "position": "QA Lead",
+      "responsibilities": [
+        "Led meetings with clients and development teams.",
+        "Estimated time and resources for test execution.",
+        "Designed test cases and generated reports.",
+        "Executed functional testing on web and mobile applications.",
+        "Created metrics for corrective actions in future projects.",
+        "Project Types: Telecommunications"
+      ]
+    },
+    {
+      "period": "2009 – 2011",
+      "company": "Choucair Testing S.A.",
+      "position": "QA Analyst",
+      "responsibilities": [
+        "Executed functional testing on desktop applications.",
+        "Reported incidents and generated quality metrics.",
+        "Project Types: Banking"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "year": "2006 – 2008",
+      "degree": "Systems Engineering",
+      "institution": "Institución Universitaria Salazar y Herrera"
+    },
+    {
+      "year": "2003 – 2006",
+      "degree": "Systems Technology",
+      "institution": "Institución Universitaria Salazar y Herrera"
+    }
+  ],
+
+  "certifications": [
+  {
+    "year": "ene. 2023",
+    "degree": "Mobile App Accessibility Fundamentals",
+    "institution": "Deque University"
+  },
+  {
+    "year": "jul. 2020",
+    "degree": "WAI0.1x: Introducción a la Accesibilidad Web",
+    "institution": "W3Cx"
+  },
+  {
+    "year": "oct. 2008",
+    "degree": "ISTQB Certified Tester - Foundation Level",
+    "institution": "ISTQB® - International Software Testing Qualifications Board"
+  }
+],
+
+  "skills": [
+    {
+      "name": "Functional Testing (Web, Mobile, Desktop)",
+      "level": 95
+    },
+    {
+      "name": "Team Management and Leadership",
+      "level": 85
+    },
+    {
+      "name": "Documentation, Metrics, and Reporting",
+      "level": 90
+    },
+    {
+      "name": "Continuous Improvement & Mentoring",
+      "level": 85
+    },
+    {
+      "name": "QA Strategies (Manual, Accessibility)",
+      "level": 90
+    }
+  ],
+  "languages": [
+    {
+      "name": "Spanish",
+      "level": 100
+    },
+    {
+      "name": "English",
+      "level": 70
+    }
+  ],
+  "repos": [],
+  "contact": [
+    {
+      "icon": "fa-phone",
+      "label": "Phone",
+      "value": "+57 3016390294"
+    },
+    {
+      "icon": "fa-envelope",
+      "label": "Email",
+      "value": "linamc@gmail.com"
+    },
+    {
+      "icon": "fa-linkedin",
+      "label": "LinkedIn",
+      "value": "linkedin.com/in/linamcartagena"
+    },
+    {
+      "icon": "fa-map-marker",
+      "label": "Location",
+      "value": "Colombia"
+    },
+    {
+      "icon": "fa-globe",
+      "label": "Personal Website",
+      "value": "www.linacartagena.com"
+    }
+  ]
+}

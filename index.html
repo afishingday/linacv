@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>CV Lina Cartagena</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .font-poppins { font-family: 'Poppins', sans-serif; }
+    @media print {
+      #langSelect, #pdfBtn, .fixed { display: none !important; }
+      section, .rounded-2xl, .shadow-lg, .shadow-xl, .p-8, .bg-white, .bg-indigo-100, .bg-indigo-100\/70 {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        box-shadow: none !important;
+        background: white !important;
+        border: none !important;
+      }
+      main, body { background: white !important; }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-slate-100 to-white text-gray-900 font-inter">
+
+  <!-- Selector de idioma y botón PDF -->
+  <div class="fixed top-6 right-10 z-40 flex gap-2 items-center">
+    <select id="langSelect" class="px-2 py-1 rounded border border-indigo-200 text-indigo-700 font-semibold shadow hover:bg-indigo-50 transition">
+      <option value="en">EN</option>
+      <option value="es">ES</option>
+    </select>
+    <button id="pdfBtn" class="bg-indigo-500 text-white px-4 py-2 rounded shadow hover:bg-indigo-700 flex items-center gap-2">
+      <i class="fa fa-file-pdf"></i> <span id="pdfText">Download PDF</span>
+    </button>
+  </div>
+
+  <main class="max-w-3xl mx-auto px-4 py-12 flex flex-col items-center space-y-10">
+
+    <!-- Hero/Profile -->
+    <section class="w-full flex flex-col items-center justify-center bg-indigo-100/70 rounded-2xl shadow-xl px-10 py-10 mb-4 mt-10 border border-indigo-200">
+      <img id="profilePic" src="" alt="Photo" class="w-36 h-36 rounded-full border-4 border-indigo-400 shadow-md object-cover mb-3"/>
+      <h1 id="name" class="font-poppins text-4xl font-extrabold text-indigo-700 mb-1 tracking-tight"></h1>
+      <h2 id="title" class="text-2xl font-semibold text-gray-700 mb-3"></h2>
+      <p id="summary" class="text-gray-700 text-center max-w-2xl mb-0"></p>
+      <!-- Contact hero se mantiene vacío para no duplicar; lo llenas si quisieras -->
+      <div id="contactHero" class="hidden"></div>
+    </section>
+
+    <!-- Experiencia -->
+    <section class="w-full bg-white rounded-2xl shadow-lg p-8 border border-slate-200">
+      <h3 id="expTitle" class="font-poppins text-2xl font-bold text-indigo-700 mb-6"></h3>
+      <div id="experienceContainer" class="space-y-7"></div>
+    </section>
+
+    <!-- Educación -->
+    <section class="w-full bg-white rounded-2xl shadow-lg p-8 border border-slate-200">
+      <h3 id="eduTitle" class="font-poppins text-2xl font-bold text-indigo-700 mb-6"></h3>
+      <div id="educationContainer" class="space-y-4"></div>
+    </section>
+
+    <!-- NEW: Certificaciones -->
+    <section class="w-full bg-white rounded-2xl shadow-lg p-8 border border-slate-200">
+      <h3 id="certTitle" class="font-poppins text-2xl font-bold text-indigo-700 mb-6"></h3>
+      <div id="certificationsContainer" class="space-y-4"></div>
+    </section>
+
+    <!-- Skills -->
+    <section class="w-full bg-white rounded-2xl shadow-lg p-8 border border-slate-200">
+      <h3 id="skillsTitle" class="font-poppins text-2xl font-bold text-indigo-700 mb-6"></h3>
+      <div id="skillsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+    </section>
+
+    <!-- Idiomas -->
+    <section class="w-full bg-white rounded-2xl shadow-lg p-8 border border-slate-200">
+      <h3 id="langTitle" class="font-poppins text-2xl font-bold text-indigo-700 mb-6"></h3>
+      <div id="languagesContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+    </section>
+
+    <!-- Contacto -->
+    <section class="w-full bg-indigo-100/70 rounded-2xl shadow-lg p-8 border border-indigo-200">
+      <h3 id="contactTitle" class="font-poppins text-2xl font-bold text-indigo-700 mb-6"></h3>
+      <ul id="contactContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4"></ul>
+    </section>
+
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+/* Tipografía y fondo */
+body { font-family: 'Inter', sans-serif; }
+.font-poppins { font-family: 'Poppins', sans-serif; }
+
+.sidebar-link {
+  @apply flex items-center gap-2 px-2 py-2 rounded hover:bg-indigo-200/40 transition-all text-indigo-700 font-medium text-base;
+}
+.sidebar-link i { font-size: 1.2rem; }
+
+/* Glass card con gradiente y sombra */
+.card-glass {
+  @apply bg-white/70 shadow-lg rounded-2xl p-6 border border-indigo-100 transition-all;
+  backdrop-filter: blur(4px);
+  border-image: linear-gradient(90deg, #6366f1 0%, #06b6d4 100%) 1;
+}
+.section-title {
+  @apply font-poppins text-xl font-bold mb-4 flex items-center gap-2 text-indigo-700;
+}
+
+/* Timeline estilo */
+.timeline { border-left: 3px solid #6366f1; margin-left: 1.5rem; padding-left: 1rem; }
+.timeline > div { position: relative; margin-bottom: 1.5rem;}
+.timeline > div::before {
+  content: '';
+  position: absolute;
+  left: -1.18rem; top: 0.3rem;
+  width: 0.85rem; height: 0.85rem;
+  background: linear-gradient(135deg, #6366f1 0%, #06b6d4 100%);
+  border-radius: 9999px; border: 2px solid #fff;
+  box-shadow: 0 0 8px #6366f1cc;
+  animation: pulse 2s infinite alternate;
+}
+@keyframes pulse { 0% { box-shadow: 0 0 6px #6366f1cc; } 100% { box-shadow: 0 0 16px #06b6d4aa; } }
+
+.animate-fade-in { animation: fade-in 1s ease-out both; }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+.animate-pulse { animation: pulse 2s infinite alternate; }
+
+/* Barras skills/languages */
+.skill-bar, .lang-bar {
+  @apply h-3 rounded bg-gray-200 overflow-hidden;
+}
+.skill-fill {
+  background: linear-gradient(to right,#6366f1,#06b6d4,#a7f3d0);
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.7s cubic-bezier(.62,.01,.56,.97);
+}
+.lang-fill {
+  background: linear-gradient(to right,#22d3ee,#10b981);
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.7s cubic-bezier(.62,.01,.56,.97);
+}
+
+.editable-input { display: none; }
+body.edit-mode .editable-input { display: block; }
+body.edit-mode .editable-view  { display: none; }
+
+@media (max-width: 767px) {
+  #sidebar { width: 56px !important; }
+  .sidebar-link span { display: none !important; }
+}
+
