@@ -1,91 +1,701 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>CV Lina Cartagena</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
-  <style>
-    body { font-family: 'Inter', sans-serif; }
-    .font-poppins { font-family: 'Poppins', sans-serif; }
-    @media print {
-      #langSelect, #pdfBtn, .fixed { display: none !important; }
-      section, .rounded-2xl, .shadow-lg, .shadow-xl, .p-8, .bg-white, .bg-indigo-100, .bg-indigo-100\/70 {
-        break-inside: avoid;
-        page-break-inside: avoid;
-        box-shadow: none !important;
-        background: white !important;
-        border: none !important;
-      }
-      main, body { background: white !important; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lina Cartagena - Senior QA & Accessibility Specialist</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- html2pdf for PDF Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
+    <style>
+        /* 1. THE SETUP & VARIABLES */
+        :root {
+            --brand-dark: #0B2447;
+            --brand-primary: #19376D;
+            --brand-accent: #2C74B3;
+            --brand-light: #A5D7E8;
+            --bg-body: #E9ECEF;
+            --bg-card: #F8F9FA;
+            --text-main: #343A40;
+            --text-muted: #6C757D;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            background-color: var(--bg-body);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 32px;
+            padding: 80px 20px 40px 20px;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+        }
+
+        /* Language Toggle Logic - ENGLISH IS DEFAULT */
+        .lang-es { display: none !important; }
+        .lang-en { display: inline-block; }
+        body.es-active .lang-es { display: inline-block !important; }
+        body.es-active p.lang-es, body.es-active div.lang-es, body.es-active h1.lang-es, body.es-active h2.lang-es, body.es-active h3.lang-es, body.es-active li.lang-es { display: block !important; }
+        body.es-active span.lang-es { display: inline !important; }
+        body.es-active .lang-en { display: none !important; }
+
+        /* Floating Nav Bar */
+        .floating-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+        .nav-brand { font-family: 'Poppins', sans-serif; font-weight: 700; color: var(--brand-dark); font-size: 20px; }
+        .nav-actions { display: flex; gap: 15px; }
+        .btn-action {
+            background: #fff;
+            border: 1px solid #DEE2E6;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--brand-dark);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-action:hover { background: var(--bg-body); border-color: var(--brand-accent); }
+        .btn-pdf { color: #D32F2F; border-color: #FFCDD2; background: #FFEBEE; }
+        .btn-pdf:hover { background: #FFCDD2; }
+
+        /* Section Cards (Previously slides) */
+        .section-container {
+            background-color: var(--bg-card);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 1100px;
+            padding: 48px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Abstract Background Elements */
+        .section-container::before {
+            content: ''; position: absolute; top: -150px; right: -150px;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(44,116,179,0.05) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%; z-index: 0;
+        }
+        .section-container > * { position: relative; z-index: 1; }
+
+        /* Typography */
+        h1, h2, h3 { color: var(--brand-dark); font-family: 'Poppins', sans-serif; font-weight: 700; letter-spacing: -0.5px; }
+        .section-title { font-size: 36px; margin-bottom: 30px; text-align: left; width: 100%; border-bottom: 3px solid var(--brand-accent); padding-bottom: 10px; display: inline-block;}
+        p, li { font-size: 16px; line-height: 1.6; margin-bottom: 15px; color: var(--text-main); }
+        .subtitle { font-weight: 500; font-size: 20px; color: var(--brand-accent); margin-bottom: 20px;}
+
+        /* Bleed Layout for Hero */
+        .bleed-image-layout {
+            padding: 0; background-color: var(--brand-dark); color: #F8F9FA;
+            display: grid; grid-template-columns: 1.1fr 0.9fr; align-items: stretch;
+        }
+        .bleed-image-layout .content-wrapper { padding: 60px; display: flex; flex-direction: column; justify-content: center; }
+        .bleed-image-layout h1 { color: #FFFFFF; font-size: 48px; line-height: 1.1; margin-bottom: 10px; }
+        .bleed-image-layout p { color: #DEE2E6; }
+        .image-container img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Grids & Layouts */
+        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .three-column { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        
+        .tile {
+            background-color: #FFFFFF; border: 1px solid #DEE2E6; border-radius: 16px;
+            padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            display: flex; flex-direction: column;
+        }
+        .tile .icon {
+            background-color: var(--bg-body); color: var(--brand-accent);
+            border-radius: 50%; font-size: 28px; height: 60px; width: 60px;
+            display: flex; align-items: center; justify-content: center; margin-bottom: 20px;
+        }
+
+        /* Progress Bars */
+        .skill-item { margin-bottom: 15px; }
+        .skill-header { display: flex; justify-content: space-between; font-weight: 600; font-size: 14px; margin-bottom: 5px; color: var(--brand-dark);}
+        .progress-bar-bg { background-color: #E9ECEF; border-radius: 10px; height: 8px; width: 100%; overflow: hidden; }
+        .progress-bar-fill { background-color: var(--brand-accent); height: 100%; border-radius: 10px; }
+
+        /* Tags */
+        .tags-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+        .tech-tag { background-color: #E9ECEF; color: var(--brand-dark); font-size: 13px; font-weight: 600; padding: 5px 12px; border-radius: 15px; }
+
+        /* Job Block */
+        .job-block { background: #fff; padding: 25px; border-radius: 12px; border-left: 4px solid var(--brand-accent); margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.02);}
+        .job-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;}
+        .job-title { font-size: 20px; margin: 0; }
+        .job-date { font-size: 14px; font-weight: 600; background: var(--bg-body); padding: 4px 10px; border-radius: 12px; color: var(--text-muted); }
+        .job-company { color: var(--brand-accent); font-weight: 600; margin-bottom: 10px; font-size: 16px;}
+        .job-block ul { margin-left: 20px; margin-bottom: 0; font-size: 15px;}
+
+        /* Timeline Layout */
+        .timeline-layout { display: flex; justify-content: space-between; position: relative; margin-top: 40px; padding-bottom: 20px;}
+        .timeline-line { background-color: #DEE2E6; height: 3px; position: absolute; top: 20px; left: 0; width: 100%; z-index: 0; }
+        .timeline-item { position: relative; width: 30%; text-align: left; z-index: 1; padding-top: 40px; }
+        .timeline-item::before { content: ''; position: absolute; top: 13px; left: 0; width: 16px; height: 16px; background: #fff; border: 4px solid var(--brand-accent); border-radius: 50%; }
+
+        /* Languages & Contact */
+        .languages-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+        }
+        .language-item-label {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
+        .language-bar-bg {
+            background: #E9ECEF;
+            height: 10px;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        .language-bar-fill {
+            height: 100%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #20C997, #12B886);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+        }
+        .contact-card {
+            background: #FFFFFF;
+            border-radius: 16px;
+            padding: 16px 18px;
+            border: 1px solid #DEE2E6;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .contact-card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            color: var(--brand-dark);
+            font-size: 14px;
+        }
+        .contact-icon-circle {
+            width: 28px;
+            height: 28px;
+            border-radius: 999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(44,116,179,0.10);
+            color: var(--brand-accent);
+            font-size: 14px;
+        }
+        .contact-value {
+            font-size: 14px;
+            color: var(--text-main);
+            word-break: break-word;
+        }
+
+        /* ===== PDF GENERATION OVERRIDES ===== */
+        .prevent-break { page-break-inside: avoid; break-inside: avoid; }
+        body.generating-pdf { background-color: #ffffff !important; padding: 0 !important; }
+        body.generating-pdf .floating-nav { display: none !important; }
+        body.generating-pdf .section-container {
+            box-shadow: none !important; border-radius: 0 !important; 
+            padding: 26px 34px !important; margin: 0 !important; max-width: 100% !important;
+            background-color: #ffffff !important;
+        }
+        body.generating-pdf .section-container::before { display: none !important; }
+        body.generating-pdf .bleed-image-layout { background-color: #ffffff !important; color: #000 !important; }
+        body.generating-pdf .bleed-image-layout h1 { color: var(--brand-dark) !important; }
+        body.generating-pdf .bleed-image-layout p { color: var(--text-main) !important; }
+        body.generating-pdf .image-container { display: none; } /* Hide image for cleaner PDF */
+        body.generating-pdf .bleed-image-layout { grid-template-columns: 1fr; }
+
+        /* ===== RESPONSIVE LAYOUT ===== */
+        @media (max-width: 1024px) {
+            body {
+                padding: 80px 15px 30px 15px;
+            }
+            .section-container {
+                padding: 40px 30px;
+                max-width: 900px;
+            }
+            .bleed-image-layout {
+                grid-template-columns: 1.1fr 0.9fr;
+            }
+            .bleed-image-layout .content-wrapper {
+                padding: 40px 30px;
+            }
+            .section-title {
+                font-size: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 70px 12px 24px 12px;
+            }
+            .floating-nav {
+                padding: 10px 16px;
+            }
+            .nav-brand {
+                font-size: 16px;
+            }
+            .btn-action {
+                padding: 6px 14px;
+                font-size: 12px;
+            }
+            .section-container {
+                padding: 28px 20px;
+                border-radius: 16px;
+            }
+            .bleed-image-layout {
+                grid-template-columns: 1fr;
+            }
+            .bleed-image-layout .content-wrapper {
+                padding: 32px 22px 24px 22px;
+            }
+            .image-container {
+                max-height: 260px;
+            }
+            .two-column,
+            .three-column,
+            .languages-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .section-title {
+                font-size: 26px;
+            }
+            .subtitle {
+                font-size: 18px;
+            }
+            .timeline-layout {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 35px;
+            }
+            .timeline-line {
+                display: none;
+            }
+            .timeline-item {
+                width: 100%;
+                padding-top: 0;
+                padding-left: 0;
+            }
+            .timeline-item::before {
+                display: none;
+            }
+            .timeline-item .job-date {
+                position: static !important;
+                display: inline-block;
+                margin-bottom: 8px;
+            }
+        }
+
+        @media (min-width: 1440px) {
+            body {
+                padding-top: 100px;
+            }
+            .section-container {
+                max-width: 1200px;
+            }
+            .bleed-image-layout .content-wrapper {
+                padding: 70px;
+            }
+        }
+    </style>
 </head>
-<body class="bg-gradient-to-br from-slate-100 to-white text-gray-900 font-inter">
+<body>
 
-  <!-- Selector de idioma y botón PDF -->
-  <div class="fixed top-6 right-10 z-40 flex gap-2 items-center">
-    <select id="langSelect" class="px-2 py-1 rounded border border-indigo-200 text-indigo-700 font-semibold shadow hover:bg-indigo-50 transition">
-      <option value="en">EN</option>
-      <option value="es">ES</option>
-    </select>
-    <button id="pdfBtn" class="bg-indigo-500 text-white px-4 py-2 rounded shadow hover:bg-indigo-700 flex items-center gap-2">
-      <i class="fa fa-file-pdf"></i> <span id="pdfText">Download PDF</span>
-    </button>
-  </div>
+    <!-- Floating Navigation -->
+    <nav class="floating-nav">
+        <div class="nav-brand">L. Cartagena</div>
+        <div class="nav-actions">
+            <button onclick="downloadPDF()" class="btn-action btn-pdf">
+                <i class="fa-regular fa-file-pdf"></i>
+                <span class="lang-en">Download PDF</span>
+                <span class="lang-es">Descargar PDF</span>
+            </button>
+            <button id="langToggle" class="btn-action">
+                <i class="fa-solid fa-language"></i>
+                <span id="langText">ESP / ENG</span>
+            </button>
+        </div>
+    </nav>
 
-  <main class="max-w-3xl mx-auto px-4 py-12 flex flex-col items-center space-y-10">
+    <!-- MAIN CONTENT FOR PDF -->
+    <div id="cv-content" style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 32px;">
 
-    <!-- Hero/Profile -->
-    <section class="w-full flex flex-col items-center justify-center bg-indigo-100/70 rounded-2xl shadow-xl px-10 py-10 mb-4 mt-10 border border-indigo-200">
-      <img id="profilePic" src="" alt="Photo" class="w-36 h-36 rounded-full border-4 border-indigo-400 shadow-md object-cover mb-3"/>
-      <h1 id="name" class="font-poppins text-4xl font-extrabold text-indigo-700 mb-1 tracking-tight"></h1>
-      <h2 id="title" class="text-2xl font-semibold text-gray-700 mb-3"></h2>
-      <p id="summary" class="text-gray-700 text-center max-w-2xl mb-0"></p>
-      <!-- Contact hero se mantiene vacío para no duplicar; lo llenas si quisieras -->
-      <div id="contactHero" class="hidden"></div>
-    </section>
+        <!-- 1. Hero Section -->
+        <section class="section-container bleed-image-layout prevent-break">
+            <div class="content-wrapper">
+                <h1>Lina Marcela Cartagena Sanguino</h1>
+                <p class="subtitle lang-en">Senior Quality Analyst / QA Engineer</p>
+                <p class="subtitle lang-es">Senior Quality Analyst / QA Engineer</p>
+                
+                <p class="lang-en">Quality Assurance Leader with <strong>over 17 years of experience</strong> driving excellence in software quality across fintech, retail, and digital accessibility projects. Skilled in building and leading distributed QA teams, defining and executing end-to-end QA strategies (manual, and accessibility), and fostering a culture of continuous improvement.</p>
+                
+                <p class="lang-es">Líder de Aseguramiento de Calidad con <strong>más de 17 años de experiencia</strong> impulsando la excelencia en la calidad de software en proyectos fintech, retail y de accesibilidad digital. Experta en la creación y liderazgo de equipos de QA distribuidos, definición y ejecución de estrategias integrales (manuales y de accesibilidad), y fomento de una cultura de mejora continua.</p>
+            </div>
+            <div class="image-container">
+                <img src="lina.jpeg" alt="Lina Cartagena">
+            </div>
+        </section>
 
-    <!-- Experiencia -->
-    <section class="w-full bg-white rounded-2xl shadow-lg p-8 border border-slate-200">
-      <h3 id="expTitle" class="font-poppins text-2xl font-bold text-indigo-700 mb-6"></h3>
-      <div id="experienceContainer" class="space-y-7"></div>
-    </section>
+        <!-- 2. Skills & Expertise -->
+        <section class="section-container prevent-break">
+            <h2 class="section-title lang-en">Core Skills & Expertise</h2>
+            <h2 class="section-title lang-es">Habilidades y Especialidad</h2>
+            
+            <div class="two-column">
+                <!-- Metrics -->
+                <div>
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="lang-en">Functional Testing (Web, Mobile, Desktop)</span>
+                            <span class="lang-es">Pruebas Funcionales (Web, Móvil, Escritorio)</span>
+                            <span>95%</span>
+                        </div>
+                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 95%;"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="lang-en">QA Strategies (Manual & Accessibility)</span>
+                            <span class="lang-es">Estrategias QA (Manuales y Accesibilidad)</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 90%;"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="lang-en">Documentation, Metrics & Reporting</span>
+                            <span class="lang-es">Documentación, Métricas y Reportes</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 90%;"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="lang-en">Team Management & Leadership</span>
+                            <span class="lang-es">Gestión y Liderazgo de Equipos</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 85%;"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="lang-en">Continuous Improvement & Mentoring</span>
+                            <span class="lang-es">Mejora Continua y Mentoría</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 85%;"></div></div>
+                    </div>
+                </div>
 
-    <!-- Educación -->
-    <section class="w-full bg-white rounded-2xl shadow-lg p-8 border border-slate-200">
-      <h3 id="eduTitle" class="font-poppins text-2xl font-bold text-indigo-700 mb-6"></h3>
-      <div id="educationContainer" class="space-y-4"></div>
-    </section>
+                <!-- Tools & Tech -->
+                <div class="tile">
+                    <h3 style="font-size: 18px; margin-bottom: 15px;" class="lang-en">Technical Stack & Tools</h3>
+                    <h3 style="font-size: 18px; margin-bottom: 15px;" class="lang-es">Stack Técnico y Herramientas</h3>
+                    <div class="tags-container">
+                        <span class="tech-tag">JIRA X-Ray</span>
+                        <span class="tech-tag">TFS / Testlink</span>
+                        <span class="tech-tag">Postman / Swagger</span>
+                        <span class="tech-tag">SoapUI</span>
+                        <span class="tech-tag">SQL</span>
+                        <span class="tech-tag">Salesforce</span>
+                        <span class="tech-tag">Browserstack</span>
+                    </div>
+                    <h3 style="font-size: 18px; margin-top: 20px; margin-bottom: 10px;" class="lang-en">Accessibility (a11y)</h3>
+                    <h3 style="font-size: 18px; margin-top: 20px; margin-bottom: 10px;" class="lang-es">Accesibilidad (a11y)</h3>
+                    <div class="tags-container">
+                        <span class="tech-tag">SiteImprove</span>
+                        <span class="tech-tag">Lighthouse</span>
+                        <span class="tech-tag">AXE / WAVE</span>
+                        <span class="tech-tag">NVDA / ChromeVox</span>
+                        <span class="tech-tag">Colour Contrast Analyser</span>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <!-- NEW: Certificaciones -->
-    <section class="w-full bg-white rounded-2xl shadow-lg p-8 border border-slate-200">
-      <h3 id="certTitle" class="font-poppins text-2xl font-bold text-indigo-700 mb-6"></h3>
-      <div id="certificationsContainer" class="space-y-4"></div>
-    </section>
+        <!-- 3. Current Experience (Globant) -->
+        <section class="section-container prevent-break">
+            <h2 class="section-title lang-en">Recent Experience</h2>
+            <h2 class="section-title lang-es">Experiencia Reciente</h2>
 
-    <!-- Skills -->
-    <section class="w-full bg-white rounded-2xl shadow-lg p-8 border border-slate-200">
-      <h3 id="skillsTitle" class="font-poppins text-2xl font-bold text-indigo-700 mb-6"></h3>
-      <div id="skillsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
-    </section>
+            <div class="job-block">
+                <div class="job-header">
+                    <h3 class="job-title">Senior Quality Analyst</h3>
+                    <span class="job-date lang-en">2015 - Present</span>
+                    <span class="job-date lang-es">2015 - Presente</span>
+                </div>
+                <div class="job-company">Globant | Medellín, Colombia</div>
+                <p style="font-size: 14px; font-weight: 600;" class="lang-en">Project Types: Banking, Education, and Telecommunications</p>
+                <p style="font-size: 14px; font-weight: 600;" class="lang-es">Tipos de Proyecto: Banca, Educación y Telecomunicaciones</p>
+                
+                <ul class="lang-en">
+                    <li><strong>Leadership & Strategy:</strong> Led and scaled distributed QA teams across multiple verticals, defining end-to-end testing strategies for functional, regression, UAT, and accessibility scopes.</li>
+                    <li><strong>Hands-on Execution:</strong> Spearheaded full-cycle functional testing for highly scalable Web, Mobile (Android/iOS), and API solutions (using Postman/Swagger), alongside data migration automation via Selenium IDE.</li>
+                    <li><strong>Accessibility Champion (a11y):</strong> Pioneered accessibility testing initiatives within major programs, establishing compliance processes, training teams on inclusive standards (WCAG), and generating key performance metrics.</li>
+                    <li><strong>Quality Mentorship:</strong> Mentored QA engineers, fostered a culture of continuous improvement, and actively supported the Testing Chapter to standardize quality methodologies.</li>
+                    <li><strong>Stakeholder Management:</strong> Orchestrated QA alignment meetings, managed risk escalation, and presented executive quality reports to global stakeholders.</li>
+                </ul>
+                <ul class="lang-es">
+                    <li><strong>Liderazgo y Estrategia:</strong> Lideré y escalé equipos de QA distribuidos en múltiples verticales, definiendo estrategias de pruebas <i>end-to-end</i> (funcionales, regresión, UAT y accesibilidad).</li>
+                    <li><strong>Ejecución Técnica:</strong> Dirigí el ciclo completo de pruebas funcionales para soluciones web, móviles (Android/iOS) y API (Postman/Swagger) altamente escalables, además de apoyar la automatización de migración de datos con Selenium IDE.</li>
+                    <li><strong>Especialista en Accesibilidad (a11y):</strong> Fui pionera en iniciativas de accesibilidad en programas de gran escala, estableciendo procesos de auditoría, capacitando equipos en estándares WCAG y generando métricas de cumplimiento.</li>
+                    <li><strong>Mentoría en Calidad:</strong> Brindé mentoría a ingenieros de QA, fomenté una cultura de mejora continua y apoyé activamente el <i>Testing Chapter</i> corporativo para estandarizar metodologías.</li>
+                    <li><strong>Gestión de Stakeholders:</strong> Coordiné reuniones de alineación, gestioné la mitigación de riesgos y presenté reportes ejecutivos de calidad a clientes globales.</li>
+                </ul>
+            </div>
+        </section>
 
-    <!-- Idiomas -->
-    <section class="w-full bg-white rounded-2xl shadow-lg p-8 border border-slate-200">
-      <h3 id="langTitle" class="font-poppins text-2xl font-bold text-indigo-700 mb-6"></h3>
-      <div id="languagesContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
-    </section>
+        <!-- 4. Previous Experience Timeline -->
+        <section class="section-container prevent-break">
+            <h2 class="section-title lang-en">Previous Experience</h2>
+            <h2 class="section-title lang-es">Experiencia Previa</h2>
 
-    <!-- Contacto -->
-    <section class="w-full bg-indigo-100/70 rounded-2xl shadow-lg p-8 border border-indigo-200">
-      <h3 id="contactTitle" class="font-poppins text-2xl font-bold text-indigo-700 mb-6"></h3>
-      <ul id="contactContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4"></ul>
-    </section>
+            <div class="timeline-layout">
+                <div class="timeline-line"></div>
+                
+                <div class="timeline-item">
+                    <span class="job-date" style="position: absolute; top: -15px;">2009 - 2011</span>
+                    <h3 style="font-size: 18px; margin-bottom: 5px;">QA Analyst</h3>
+                    <p style="color: var(--brand-accent); font-weight: 600; font-size: 14px;" class="lang-en">Choucair Testing S.A.</p>
+                    <p style="color: var(--brand-accent); font-weight: 600; font-size: 14px;" class="lang-es">Choucair Testing S.A.</p>
+                    <p style="font-size: 14px; line-height: 1.4;" class="lang-en">Banking Sector. Executed functional testing on desktop applications, reported incidents, and generated core quality metrics.</p>
+                    <p style="font-size: 14px; line-height: 1.4;" class="lang-es">Sector Bancario. Ejecución de pruebas funcionales en escritorio, reporte de incidencias y generación de métricas de calidad.</p>
+                </div>
 
-  </main>
-  <script src="app.js"></script>
+                <div class="timeline-item">
+                    <span class="job-date" style="position: absolute; top: -15px;">2011 - 2012</span>
+                    <h3 style="font-size: 18px; margin-bottom: 5px;">QA Lead</h3>
+                    <p style="color: var(--brand-accent); font-weight: 600; font-size: 14px;" class="lang-en">Informática Siglo 21 Ltda.</p>
+                    <p style="color: var(--brand-accent); font-weight: 600; font-size: 14px;" class="lang-es">Informática Siglo 21 Ltda.</p>
+                    <p style="font-size: 14px; line-height: 1.4;" class="lang-en">Project leadership (Telecom). Estimated time and resources, designed test cases, and created metrics for corrective actions in future projects.</p>
+                    <p style="font-size: 14px; line-height: 1.4;" class="lang-es">Liderazgo de proyectos (Telecomunicaciones). Estimación de recursos, diseño de casos y creación de métricas para acciones correctivas futuras.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <span class="job-date" style="position: absolute; top: -15px;">2012 - 2015</span>
+                    <h3 style="font-size: 18px; margin-bottom: 5px;">QA Lead</h3>
+                    <p style="color: var(--brand-accent); font-weight: 600; font-size: 14px;" class="lang-en">Arkix S.A.S.</p>
+                    <p style="color: var(--brand-accent); font-weight: 600; font-size: 14px;" class="lang-es">Arkix S.A.S.</p>
+                    <p style="font-size: 14px; line-height: 1.4;" class="lang-en">Managed QA teams ensuring effective testing processes based on CMMI. Performed functional testing on web and mobile. Worked with automated and load testing (Selenium, JMeter).</p>
+                    <p style="font-size: 14px; line-height: 1.4;" class="lang-es">Gestión de equipos QA basados en CMMI. Pruebas funcionales web y móvil. Experiencia con pruebas automatizadas y de carga (Selenium, JMeter).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Education & Certs -->
+        <section class="section-container prevent-break">
+            <h2 class="section-title lang-en">Education & Certifications</h2>
+            <h2 class="section-title lang-es">Educación y Certificaciones</h2>
+
+            <div class="three-column">
+                <!-- Academic -->
+                <div class="tile">
+                    <div class="icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                    <h3 style="font-size: 18px; margin-bottom: 15px;" class="lang-en">Academic Background</h3>
+                    <h3 style="font-size: 18px; margin-bottom: 15px;" class="lang-es">Formación Académica</h3>
+                    
+                    <p style="margin-bottom: 5px; font-weight: 600;" class="lang-en">Systems Engineering</p>
+                    <p style="margin-bottom: 5px; font-weight: 600;" class="lang-es">Ingeniería de Sistemas</p>
+                    <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 15px;">Institución Universitaria Salazar y Herrera (2006-2008)</p>
+                    
+                    <p style="margin-bottom: 5px; font-weight: 600;" class="lang-en">Systems Technology</p>
+                    <p style="margin-bottom: 5px; font-weight: 600;" class="lang-es">Tecnología en Sistemas</p>
+                    <p style="font-size: 14px; color: var(--text-muted);">Institución Universitaria Salazar y Herrera (2003-2006)</p>
+                </div>
+
+                <!-- Certifications -->
+                <div class="tile">
+                    <div class="icon"><i class="fa-solid fa-certificate"></i></div>
+                    <h3 style="font-size: 18px; margin-bottom: 15px;" class="lang-en">Core Certifications</h3>
+                    <h3 style="font-size: 18px; margin-bottom: 15px;" class="lang-es">Certificaciones Base</h3>
+                    
+                    <p style="margin-bottom: 5px; font-weight: 600;">ISTQB Foundation Level</p>
+                    <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 15px;">ISTQB (Oct. 2008)</p>
+                    
+                    <p style="margin-bottom: 5px; font-weight: 600;" class="lang-en">WAI0.1x: Intro to Web Accessibility</p>
+                    <p style="margin-bottom: 5px; font-weight: 600;" class="lang-es">WAI0.1x: Intro a la Accesibilidad</p>
+                    <p style="font-size: 14px; color: var(--text-muted);">W3Cx - edX (Jul. 2020)</p>
+                </div>
+
+                <!-- Specialized -->
+                <div class="tile">
+                    <div class="icon"><i class="fa-solid fa-universal-access"></i></div>
+                    <h3 style="font-size: 18px; margin-bottom: 15px;" class="lang-en">Specialized Training</h3>
+                    <h3 style="font-size: 18px; margin-bottom: 15px;" class="lang-es">Formación Especializada</h3>
+                    
+                    <p style="margin-bottom: 5px; font-weight: 600;">WCAG 2.2 Level AA</p>
+                    <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 10px;">Instituto de Accesibilidad</p>
+
+                    <p style="margin-bottom: 5px; font-weight: 600;">Mobile App a11y Fundamentals</p>
+                    <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 10px;">Deque University (Jan 2023)</p>
+                    
+                    <p style="margin-bottom: 5px; font-weight: 600;">Prompt Engineering & ChatGPT</p>
+                    <p style="font-size: 14px; color: var(--text-muted);">Platzi (2025 - 2026)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Languages -->
+        <section class="section-container prevent-break">
+            <h2 class="section-title lang-en">Languages</h2>
+            <h2 class="section-title lang-es">Idiomas</h2>
+
+            <div class="languages-grid">
+                <div>
+                    <div class="language-item-label">
+                        <span class="lang-en">Spanish</span>
+                        <span class="lang-es">Español</span>
+                        <span>100%</span>
+                    </div>
+                    <div class="language-bar-bg">
+                        <div class="language-bar-fill" style="width: 100%;"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="language-item-label">
+                        <span class="lang-en">English</span>
+                        <span class="lang-es">Inglés</span>
+                        <span>70%</span>
+                    </div>
+                    <div class="language-bar-bg">
+                        <div class="language-bar-fill" style="width: 70%;"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Contact -->
+        <section class="section-container prevent-break">
+            <h2 class="section-title lang-en">Contact</h2>
+            <h2 class="section-title lang-es">Contacto</h2>
+
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-card-header">
+                        <div class="contact-icon-circle"><i class="fa-solid fa-phone"></i></div>
+                        <span class="lang-en">Phone</span>
+                        <span class="lang-es">Teléfono</span>
+                    </div>
+                    <div class="contact-value">+57 301 639 0294</div>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-card-header">
+                        <div class="contact-icon-circle"><i class="fa-solid fa-envelope"></i></div>
+                        <span>Email</span>
+                    </div>
+                    <div class="contact-value">linamc@gmail.com</div>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-card-header">
+                        <div class="contact-icon-circle"><i class="fa-brands fa-linkedin-in"></i></div>
+                        <span>LinkedIn</span>
+                    </div>
+                    <div class="contact-value">linkedin.com/in/linamcartagena</div>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-card-header">
+                        <div class="contact-icon-circle"><i class="fa-solid fa-location-dot"></i></div>
+                        <span class="lang-en">Location</span>
+                        <span class="lang-es">Ubicación</span>
+                    </div>
+                    <div class="contact-value">Colombia</div>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-card-header">
+                        <div class="contact-icon-circle"><i class="fa-solid fa-globe"></i></div>
+                        <span class="lang-en">Personal Website</span>
+                        <span class="lang-es">Sitio web personal</span>
+                    </div>
+                    <div class="contact-value">www.linacartagena.com</div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // Language Toggle Logic
+        let currentLang = 'en'; // default
+        
+        document.addEventListener("DOMContentLoaded", () => {
+            const toggleBtn = document.getElementById('langToggle');
+            const langTextSpan = document.getElementById('langText');
+            
+            toggleBtn.addEventListener('click', () => {
+                if (currentLang === 'en') {
+                    document.body.classList.add('es-active');
+                    currentLang = 'es';
+                    langTextSpan.textContent = 'ENG / ESP';
+                } else {
+                    document.body.classList.remove('es-active');
+                    currentLang = 'en';
+                    langTextSpan.textContent = 'ESP / ENG';
+                }
+            });
+        });
+
+        // PDF Generation Logic - Preserving the format
+        function downloadPDF() {
+            document.body.classList.add('generating-pdf');
+            const element = document.getElementById('cv-content');
+            
+            const fileName = currentLang === 'en' ? 'Lina_Cartagena_CV_EN.pdf' : 'Lina_Cartagena_CV_ES.pdf';
+            const opt = {
+                margin:       [0.4, 0, 0.4, 0], // Top, Right, Bottom, Left
+                filename:     fileName,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
+                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' },
+                pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+            };
+
+            html2pdf().set(opt).from(element).save().then(() => {
+                document.body.classList.remove('generating-pdf');
+            }).catch(err => {
+                console.error("Error generating PDF", err);
+                document.body.classList.remove('generating-pdf');
+            });
+        }
+    </script>
 </body>
 </html>
