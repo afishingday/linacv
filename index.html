@@ -39,10 +39,7 @@
 
         /* Language Toggle Logic - ENGLISH IS DEFAULT */
         .lang-es { display: none !important; }
-        .lang-en { display: inline-block; }
-        body.es-active .lang-es { display: inline-block !important; }
-        body.es-active p.lang-es, body.es-active div.lang-es, body.es-active h1.lang-es, body.es-active h2.lang-es, body.es-active h3.lang-es, body.es-active li.lang-es { display: block !important; }
-        body.es-active span.lang-es { display: inline !important; }
+        body.es-active .lang-es { display: revert !important; }
         body.es-active .lang-en { display: none !important; }
 
         /* Floating Nav Bar */
@@ -148,6 +145,14 @@
         .tags-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
         .tech-tag { background-color: #E9ECEF; color: var(--brand-dark); font-size: 13px; font-weight: 600; padding: 5px 12px; border-radius: 15px; }
 
+        /* Skill domain color coding */
+        .skill-test .icon      { background-color: #E3F0FA; color: #2C74B3; }
+        .skill-test .tech-tag  { background-color: #E3F0FA; color: #19376D; }
+        .skill-tools .icon     { background-color: #E8F5E9; color: #1B5E20; }
+        .skill-tools .tech-tag { background-color: #E8F5E9; color: #1B5E20; }
+        .skill-lead .icon      { background-color: #FFF3E0; color: #B26A00; }
+        .skill-lead .tech-tag  { background-color: #FFF3E0; color: #8A5300; }
+
         /* Floating Badge for Hero */
         .floating-badge {
             position: absolute;
@@ -217,9 +222,12 @@
 
         .contact-grid {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-template-columns: repeat(6, 1fr);
             gap: 16px;
         }
+        .contact-grid .contact-card { grid-column: span 2; }
+        .contact-grid .contact-card:nth-child(4) { grid-column: 2 / 4; }
+        .contact-grid .contact-card:nth-child(5) { grid-column: 4 / 6; }
         .contact-card {
             background: #FFFFFF;
             border-radius: 16px;
@@ -271,6 +279,10 @@
         body.generating-pdf .image-container { display: none; } /* Hide image for cleaner PDF */
         body.generating-pdf .bleed-image-layout { grid-template-columns: 1fr; }
         body.generating-pdf .floating-badge { display: none !important; }
+        body.generating-pdf #cv-content { gap: 0 !important; align-items: stretch !important; }
+        body.generating-pdf .tile { break-inside: avoid !important; page-break-inside: avoid !important; }
+        body.generating-pdf .timeline-item { break-inside: avoid !important; page-break-inside: avoid !important; }
+        body.generating-pdf * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
 
         /* ===== RESPONSIVE LAYOUT ===== */
         @media (max-width: 1024px) {
@@ -332,6 +344,11 @@
                 grid-template-columns: 1fr;
                 gap: 24px;
             }
+            .contact-grid .contact-card,
+            .contact-grid .contact-card:nth-child(4),
+            .contact-grid .contact-card:nth-child(5) {
+                grid-column: 1;
+            }
             .section-title {
                 font-size: 26px;
             }
@@ -372,6 +389,56 @@
                 padding: 70px;
             }
         }
+
+        /* ===== PRINT MEDIA (Ctrl+P / browser print) ===== */
+        @media print {
+            body {
+                background-color: #ffffff !important;
+                padding: 0 !important;
+                gap: 0 !important;
+                display: block !important;
+            }
+            .floating-nav { display: none !important; }
+            #cv-content { display: block !important; width: 100% !important; }
+            .section-container {
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                padding: 20px 28px !important;
+                margin: 0 !important;
+                max-width: 100% !important;
+                width: 100% !important;
+                overflow: visible !important;
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            .section-container::before { display: none !important; }
+            .bleed-image-layout {
+                grid-template-columns: 1fr !important;
+                background-color: #ffffff !important;
+                color: #000 !important;
+            }
+            .bleed-image-layout h1 { color: var(--brand-dark) !important; font-size: 32px !important; }
+            .bleed-image-layout p { color: var(--text-main) !important; }
+            .bleed-image-layout .content-wrapper { padding: 28px !important; }
+            .image-container { display: none !important; }
+            .floating-badge { display: none !important; }
+            h2.section-title { page-break-after: avoid; break-after: avoid; }
+            h3 { page-break-after: avoid; break-after: avoid; }
+            .job-block, .tile, .timeline-item, .contact-card {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            .two-column, .three-column, .contact-grid {
+                grid-template-columns: 1fr !important;
+            }
+            .contact-grid .contact-card,
+            .contact-grid .contact-card:nth-child(4),
+            .contact-grid .contact-card:nth-child(5) { grid-column: 1 !important; }
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -399,12 +466,11 @@
         <section class="section-container bleed-image-layout prevent-break">
             <div class="content-wrapper">
                 <h1>Lina Marcela Cartagena Sanguino</h1>
-                <p class="subtitle lang-en">Senior Quality Analyst / QA Engineer</p>
-                <p class="subtitle lang-es">Senior Quality Analyst / QA Engineer</p>
-                
-                <p class="lang-en">Quality Assurance Leader with <strong>over <span id="expYearsInlineEn">17</span> years of experience</strong> driving excellence in software quality across fintech, retail, and digital accessibility projects. Skilled in building and leading distributed QA teams, defining and executing end-to-end QA strategies (manual, and accessibility), and fostering a culture of continuous improvement.</p>
-                
-                <p class="lang-es">Líder de Aseguramiento de Calidad con <strong>más de <span id="expYearsInlineEs">17</span> años de experiencia</strong> impulsando la excelencia en la calidad de software en proyectos fintech, retail y de accesibilidad digital. Experta en la creación y liderazgo de equipos de QA distribuidos, definición y ejecución de estrategias integrales (manuales y de accesibilidad), y fomento de una cultura de mejora continua.</p>
+                <p class="subtitle">Senior Quality Analyst / QA Engineer</p>
+
+                <p class="lang-en">Senior QA Engineer with <strong>over <span id="expYearsInlineEn">17</span> years</strong> delivering quality across banking, retail, education, and telecom products. Specialist in Web/Mobile functional testing, API validation, and digital accessibility (WCAG 2.2). Led distributed QA teams at Globant, establishing accessibility compliance processes and driving testing strategies from inception to executive reporting.</p>
+
+                <p class="lang-es">QA Engineer Senior con <strong>más de <span id="expYearsInlineEs">17</span> años</strong> entregando calidad en productos de banca, retail, educación y telecomunicaciones. Especialista en pruebas funcionales Web/Móvil, validación de APIs y accesibilidad digital (WCAG 2.2). Lideró equipos de QA distribuidos en Globant, estableciendo procesos de cumplimiento de accesibilidad y gestionando estrategias de prueba desde la definición hasta el reporte ejecutivo.</p>
             </div>
             <div class="image-container" style="position: relative;">
                 <img src="lina.jpeg" alt="Lina Cartagena">
@@ -424,83 +490,28 @@
             <h2 class="section-title lang-en"><i class="fa-solid fa-gears" aria-hidden="true"></i>Core Skills & Expertise</h2>
             <h2 class="section-title lang-es"><i class="fa-solid fa-gears" aria-hidden="true"></i>Habilidades y Especialidad</h2>
             
-            <div class="two-column">
-                <!-- Metrics -->
-                <div>
-                    <div class="skill-item">
-                        <div class="skill-header">
-                            <span class="lang-en"><i class="fa-solid fa-vial-circle-check" style="color: var(--brand-accent); margin-right: 5px;"></i>Functional Testing (Web, Mobile, Desktop)</span>
-                            <span class="lang-es"><i class="fa-solid fa-vial-circle-check" style="color: var(--brand-accent); margin-right: 5px;"></i>Pruebas Funcionales (Web, Móvil, Escritorio)</span>
-                            <span>95%</span>
-                        </div>
-                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 95%;"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-header">
-                            <span class="lang-en"><i class="fa-solid fa-shield-halved" style="color: var(--brand-accent); margin-right: 5px;"></i>QA Strategies (Manual & Accessibility)</span>
-                            <span class="lang-es"><i class="fa-solid fa-shield-halved" style="color: var(--brand-accent); margin-right: 5px;"></i>Estrategias QA (Manuales y Accesibilidad)</span>
-                            <span>90%</span>
-                        </div>
-                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 90%;"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-header">
-                            <span class="lang-en"><i class="fa-solid fa-file-lines" style="color: var(--brand-accent); margin-right: 5px;"></i>Documentation, Metrics & Reporting</span>
-                            <span class="lang-es"><i class="fa-solid fa-file-lines" style="color: var(--brand-accent); margin-right: 5px;"></i>Documentación, Métricas y Reportes</span>
-                            <span>90%</span>
-                        </div>
-                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 90%;"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-header">
-                            <span class="lang-en"><i class="fa-solid fa-users-gear" style="color: var(--brand-accent); margin-right: 5px;"></i>Team Management & Leadership</span>
-                            <span class="lang-es"><i class="fa-solid fa-users-gear" style="color: var(--brand-accent); margin-right: 5px;"></i>Gestión y Liderazgo de Equipos</span>
-                            <span>85%</span>
-                        </div>
-                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 85%;"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-header">
-                            <span class="lang-en"><i class="fa-solid fa-arrows-spin" style="color: var(--brand-accent); margin-right: 5px;"></i>Continuous Improvement & Mentoring</span>
-                            <span class="lang-es"><i class="fa-solid fa-arrows-spin" style="color: var(--brand-accent); margin-right: 5px;"></i>Mejora Continua y Mentoría</span>
-                            <span>85%</span>
-                        </div>
-                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 85%;"></div></div>
-                    </div>
+            <div class="three-column">
 
-                    <div class="tile" style="margin-top: 22px;">
-                        <h3 style="font-size: 18px; margin-bottom: 10px;" class="lang-en"><i class="fa-solid fa-language" aria-hidden="true" style="color: var(--brand-accent); margin-right: 8px;"></i>Languages</h3>
-                        <h3 style="font-size: 18px; margin-bottom: 10px;" class="lang-es"><i class="fa-solid fa-language" aria-hidden="true" style="color: var(--brand-accent); margin-right: 8px;"></i>Idiomas</h3>
-
-                        <div class="languages-grid" style="grid-template-columns: 1fr; gap: 16px;">
-                            <div>
-                                <div class="language-item-label">
-                                    <span class="lang-en">Spanish</span>
-                                    <span class="lang-es">Español</span>
-                                    <span>100%</span>
-                                </div>
-                                <div class="language-bar-bg">
-                                    <div class="language-bar-fill" style="width: 100%;"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="language-item-label">
-                                    <span class="lang-en">English</span>
-                                    <span class="lang-es">Inglés</span>
-                                    <span>70%</span>
-                                </div>
-                                <div class="language-bar-bg">
-                                    <div class="language-bar-fill" style="width: 70%;"></div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="tile skill-test">
+                    <div class="icon"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h3 style="font-size: 18px; margin-bottom: 15px;" class="lang-en">Testing &amp; Quality</h3>
+                    <h3 style="font-size: 18px; margin-bottom: 15px;" class="lang-es">Pruebas y Calidad</h3>
+                    <div class="tags-container">
+                        <span class="tech-tag"><span class="lang-en">Functional Testing</span><span class="lang-es">Pruebas Funcionales</span></span>
+                        <span class="tech-tag"><span class="lang-en">Regression Testing</span><span class="lang-es">Pruebas de Regresión</span></span>
+                        <span class="tech-tag">UAT</span>
+                        <span class="tech-tag"><span class="lang-en">Accessibility Testing (a11y)</span><span class="lang-es">Pruebas de Accesibilidad (a11y)</span></span>
+                        <span class="tech-tag"><span class="lang-en">API Testing</span><span class="lang-es">Pruebas de API</span></span>
+                        <span class="tech-tag"><span class="lang-en">Exploratory Testing</span><span class="lang-es">Pruebas Exploratorias</span></span>
+                        <span class="tech-tag"><span class="lang-en">Web · Mobile · Desktop</span><span class="lang-es">Web · Móvil · Escritorio</span></span>
+                        <span class="tech-tag">WCAG 2.2</span>
                     </div>
                 </div>
 
-                <!-- Tools & Tech -->
-                <div class="tile">
-                    <h3 style="font-size: 18px; margin-bottom: 15px;" class="lang-en"><i class="fa-solid fa-gears" aria-hidden="true" style="color: var(--brand-accent); margin-right: 10px;"></i>Technical Stack & Tools</h3>
-                    <h3 style="font-size: 18px; margin-bottom: 15px;" class="lang-es"><i class="fa-solid fa-gears" aria-hidden="true" style="color: var(--brand-accent); margin-right: 10px;"></i>Stack Técnico y Herramientas</h3>
+                <div class="tile skill-tools">
+                    <div class="icon"><i class="fa-solid fa-gears"></i></div>
+                    <h3 style="font-size: 18px; margin-bottom: 15px;" class="lang-en">Tools &amp; Stack</h3>
+                    <h3 style="font-size: 18px; margin-bottom: 15px;" class="lang-es">Herramientas y Stack</h3>
                     <div class="tags-container">
                         <span class="tech-tag">JIRA X-Ray</span>
                         <span class="tech-tag">TFS / Testlink</span>
@@ -508,16 +519,49 @@
                         <span class="tech-tag">SoapUI</span>
                         <span class="tech-tag">SQL</span>
                         <span class="tech-tag">Salesforce</span>
-                        <span class="tech-tag">Browserstack</span>
-                    </div>
-                    <h3 style="font-size: 18px; margin-top: 20px; margin-bottom: 10px;" class="lang-en"><i class="fa-solid fa-universal-access" aria-hidden="true" style="color: var(--brand-accent); margin-right: 10px;"></i>Accessibility (a11y)</h3>
-                    <h3 style="font-size: 18px; margin-top: 20px; margin-bottom: 10px;" class="lang-es"><i class="fa-solid fa-universal-access" aria-hidden="true" style="color: var(--brand-accent); margin-right: 10px;"></i>Accesibilidad (a11y)</h3>
-                    <div class="tags-container">
+                        <span class="tech-tag">BrowserStack</span>
                         <span class="tech-tag">SiteImprove</span>
                         <span class="tech-tag">Lighthouse</span>
                         <span class="tech-tag">AXE / WAVE</span>
                         <span class="tech-tag">NVDA / ChromeVox</span>
-                        <span class="tech-tag">Colour Contrast Analyser</span>
+                        <span class="tech-tag"><span class="lang-en">Colour Contrast Analyser</span><span class="lang-es">Analizador de Contraste</span></span>
+                    </div>
+                </div>
+
+                <div class="tile skill-lead">
+                    <div class="icon"><i class="fa-solid fa-users-gear"></i></div>
+                    <h3 style="font-size: 18px; margin-bottom: 15px;" class="lang-en">Leadership &amp; Process</h3>
+                    <h3 style="font-size: 18px; margin-bottom: 15px;" class="lang-es">Liderazgo y Proceso</h3>
+                    <div class="tags-container">
+                        <span class="tech-tag"><span class="lang-en">Team Management</span><span class="lang-es">Gestión de Equipos</span></span>
+                        <span class="tech-tag"><span class="lang-en">QA Mentoring</span><span class="lang-es">Mentoría QA</span></span>
+                        <span class="tech-tag"><span class="lang-en">Stakeholder Management</span><span class="lang-es">Gestión de Stakeholders</span></span>
+                        <span class="tech-tag">Agile / Scrum</span>
+                        <span class="tech-tag">CMMI</span>
+                        <span class="tech-tag"><span class="lang-en">End-to-End QA Strategy</span><span class="lang-es">Estrategia QA E2E</span></span>
+                        <span class="tech-tag"><span class="lang-en">Risk-Based Testing</span><span class="lang-es">Pruebas Basadas en Riesgo</span></span>
+                        <span class="tech-tag"><span class="lang-en">Continuous Improvement</span><span class="lang-es">Mejora Continua</span></span>
+                        <span class="tech-tag"><span class="lang-en">Executive Reporting</span><span class="lang-es">Reporte Ejecutivo</span></span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="tile" style="margin-top: 30px; padding: 30px 40px;">
+                <h3 style="font-size: 24px; margin-bottom: 20px; color: var(--brand-primary);" class="lang-en"><i class="fa-solid fa-language" aria-hidden="true" style="color: var(--brand-accent); margin-right: 10px;"></i>Languages</h3>
+                <h3 style="font-size: 24px; margin-bottom: 20px; color: var(--brand-primary);" class="lang-es"><i class="fa-solid fa-language" aria-hidden="true" style="color: var(--brand-accent); margin-right: 10px;"></i>Idiomas</h3>
+                <div class="two-column" style="gap: 40px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-weight: 600; font-size: 16px;" class="lang-en">Spanish</span>
+                        <span style="font-weight: 600; font-size: 16px;" class="lang-es">Español</span>
+                        <span style="font-size: 13px; background: #E9ECEF; padding: 4px 12px; border-radius: 12px; font-weight: 600; color: var(--brand-dark);" class="lang-en">Native</span>
+                        <span style="font-size: 13px; background: #E9ECEF; padding: 4px 12px; border-radius: 12px; font-weight: 600; color: var(--brand-dark);" class="lang-es">Nativo</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-weight: 600; font-size: 16px;" class="lang-en">English</span>
+                        <span style="font-weight: 600; font-size: 16px;" class="lang-es">Inglés</span>
+                        <span style="font-size: 13px; background: #E9ECEF; padding: 4px 12px; border-radius: 12px; font-weight: 600; color: var(--brand-dark);" class="lang-en">B2 — Professional Working</span>
+                        <span style="font-size: 13px; background: #E9ECEF; padding: 4px 12px; border-radius: 12px; font-weight: 600; color: var(--brand-dark);" class="lang-es">B2 — Profesional</span>
                     </div>
                 </div>
             </div>
@@ -568,8 +612,8 @@
                     <h3 style="font-size: 18px; margin-bottom: 5px;">QA Lead</h3>
                     <p style="color: var(--brand-accent); font-weight: 600; font-size: 14px;" class="lang-en">Arkix S.A.S.</p>
                     <p style="color: var(--brand-accent); font-weight: 600; font-size: 14px;" class="lang-es">Arkix S.A.S.</p>
-                    <p style="font-size: 14px; line-height: 1.4;" class="lang-en">Managed QA teams ensuring effective testing processes based on CMMI. Performed functional testing on web and mobile. Worked with automated and load testing (Selenium, JMeter).</p>
-                    <p style="font-size: 14px; line-height: 1.4;" class="lang-es">Gestión de equipos QA basados en CMMI. Pruebas funcionales web y móvil. Experiencia con pruebas automatizadas y de carga (Selenium, JMeter).</p>
+                    <p style="font-size: 14px; line-height: 1.4;" class="lang-en">Managed QA teams ensuring effective testing processes based on CMMI. Performed functional testing on web and mobile.</p>
+                    <p style="font-size: 14px; line-height: 1.4;" class="lang-es">Gestión de equipos QA basados en CMMI. Pruebas funcionales web y móvil.</p>
                     <p style="font-size: 14px; line-height: 1.4; margin-top: 6px;" class="lang-en"><strong>Project Types:</strong> Government, Entertainment, and Telecommunications.</p>
                     <p style="font-size: 14px; line-height: 1.4; margin-top: 6px;" class="lang-es"><strong>Tipos de Proyecto:</strong> Gobierno, Comunicaciones y Entretenimiento.</p>
                 </div>
@@ -748,7 +792,7 @@
             
             const fileName = currentLang === 'en' ? 'Lina_Cartagena_CV_EN.pdf' : 'Lina_Cartagena_CV_ES.pdf';
             const opt = {
-                margin:       [0.4, 0, 0.4, 0], // Top, Right, Bottom, Left
+                margin:       [0.4, 0.4, 0.4, 0.4], // inches: top, right, bottom, left
                 filename:     fileName,
                 image:        { type: 'jpeg', quality: 0.98 },
                 html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
